@@ -1,6 +1,10 @@
 import random, os
 from flask import Flask, send_file, request
 
+def random_pic(s : str):
+	f = random.choice(os.listdir(s))
+	return os.path.join(s, f)
+
 app = Flask("CuteDraw")
 
 @app.route("/")
@@ -13,5 +17,6 @@ def get_image():
 	if not (rget("claim") and rget("user")):
 		return "Error! :("
 	else:
-		return send_file("gently.png")
+		print(request.remote_addr)
+		return send_file(random_pic("img"))
 
