@@ -14,7 +14,6 @@ class HashErrors:
     HASHE_NOSALT = 1
     HASHE_EMPTYSALT = 2
 
-    # TODO:
     HASHE_NOHASH = 3
     HASHE_EMPTYHASH = 4
 

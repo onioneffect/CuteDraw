@@ -1,6 +1,8 @@
 import cute
 import logging, os, sys
 
+from cute import flask_backend
+
 def main(config):
 	logging.debug("Checking if outdir `%s` exists...", config.outdir)
 	if not os.path.isdir(config.outdir):
@@ -10,8 +12,8 @@ def main(config):
 		logging.debug("Already exists!")
 
 	# Generate salt while setting up the program because it's random anyways
-	logging.debug("Calling %s with %s...", cute.crypto.salt_check, config)
-	ret = cute.crypto.salt_check(config)
+	logging.debug("Calling %s with %s...", cute.crypto.attr_check, config)
+	ret = cute.crypto.attr_check(config, "salt")
 	logging.debug(cute.errors.HashErrors.m[ret])
 
 	if ret != cute.errors.HashErrors.HASHE_SUCCESS:
@@ -33,6 +35,9 @@ if __name__ == "__main__":
 	logging.debug("Returned %s with %d attributes" \
 		% (client_settings, len(dir(client_settings)))
 	)
+
+	# Ay it works
+	flask_backend.client_settings = client_settings
 
 	logging.debug("Calling %s with %s" % (main, client_settings))
 	try:

@@ -18,9 +18,3 @@ def attr_check(cfg, attr : str):
 		return getattr(errors.HashErrors, "HASHE_EMPTY" + attr.upper())
 
 	return 0
-
-def salt_check(cfg):
-	if (r := attr_check(cfg, "salt")) != 0:
-		return r
-	else:
-		return 0
