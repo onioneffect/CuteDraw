@@ -1,0 +1,6 @@
+*.ttf
+__pycache__/
+trash/
+output/
+
+cute/disc_classes.py

@@ -1,25 +1,26 @@
-from PIL import Image
-import json
-from random import choice
+import os
+import hashlib
+from PIL import Image, ImageFont, ImageDraw
 
-def buildTemplate(overrideID : str, template : str):
-    try:
-        loop = template["template"]
-    except KeyError:
-        loop = template["sub"]
-        _buildSubTemplate(overrideID, loop)
-        return
+def generate_img(path : str, text : str):
+	w, h = 90, 40
+	shape = [(450, 690), (450 + w, 690 + h)]
 
-    with open("config.json") as f:
-        templateSettings = json.load(f)["templates"][loop]
+	image = Image.open(path)
 
-    templateIMG = Image.open("Templates/{}.png".format(loop))
-    coverIMG = Image.open("covers/{}.jpg".format(overrideID))
+	draw = ImageDraw.Draw(image)
 
-    box = tuple(templateSettings["coordinates"])
-    coverIMG = coverIMG.resize(templateSettings["dimensions"])
+	font = ImageFont.truetype(r'wild.ttf', 18)
 
-    templateIMG.paste(coverIMG, box)
-    templateIMG.save("current.jpg")
-    return
+	draw.rectangle(shape, fill = "black")
+	draw.text((420, 700), text, fill = "white", font = font, align ="left")
 
+	out_filename = hashlib.md5(text.encode("ascii")).hexdigest()
+	out_path = "output/" + out_filename + ".jpg"
+
+	image.save(out_path)
+	return out_path
+
+if __name__ == "__main__":
+	import sys
+	generate_img(sys.argv[1], sys.argv[2])

@@ -1,1 +1,1 @@
-import cute.settings, cute.flask_backend
+import cute.settings, cute.flask_backend, cute.log
