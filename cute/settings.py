@@ -35,6 +35,7 @@ def load_config():
 def save_config(cfg):
 	cfg_path = cfg_path_check()
 
+	logging.debug("Opening config file %s" %cfg_path)
 	try:
 		fp = open(cfg_path, "w")
 	except FileNotFoundError:
