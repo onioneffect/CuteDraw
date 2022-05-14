@@ -9,6 +9,17 @@ def main(config):
 	else:
 		logging.debug("Already exists!")
 
+	# Generate salt while setting up the program because it's random anyways
+	logging.debug("Calling %s with %s...", cute.crypto.salt_check, config)
+	ret = cute.crypto.salt_check(config)
+	logging.debug(cute.errors.HashErrors.m[ret])
+
+	if ret != cute.errors.HashErrors.HASHE_SUCCESS:
+		cute.crypto.gen_salt(config)
+
+		logging.debug("Saving config...")
+		cute.settings.save_config(config)
+
 	logging.debug("Calling %s" % cute.flask_backend.app.run)
 	cute.flask_backend.app.run("0.0.0.0")
 
