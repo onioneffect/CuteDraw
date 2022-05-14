@@ -16,4 +16,4 @@ def get_image():
 		return send_file("img/donda.png")
 	else:
 		s = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
-		return send_file(images.generate_img("cute/img/sup.jpg", s))
+		return send_file(images.generate_img("img/sup.jpg", s))
