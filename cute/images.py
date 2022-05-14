@@ -3,8 +3,9 @@ import hashlib
 from PIL import Image, ImageFont, ImageDraw
 
 def generate_img(path : str, text : str):
+	x, y = 460, 690
 	w, h = 90, 40
-	shape = [(450, 690), (450 + w, 690 + h)]
+	shape = [(x, y), (x + w, y + h)]
 
 	image = Image.open(path)
 
@@ -13,7 +14,7 @@ def generate_img(path : str, text : str):
 	font = ImageFont.truetype(r'wild.ttf', 18)
 
 	draw.rectangle(shape, fill = "black")
-	draw.text((420, 700), text, fill = "white", font = font, align ="left")
+	draw.text((x, y), text, fill = "white", font = font, align ="left")
 
 	out_filename = hashlib.md5(text.encode("ascii")).hexdigest()
 	out_path = "output/" + out_filename + ".jpg"

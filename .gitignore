@@ -3,4 +3,5 @@ __pycache__/
 trash/
 output/
 
+.venv
 cute/disc_classes.py

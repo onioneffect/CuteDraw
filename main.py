@@ -10,7 +10,7 @@ def main(config):
 		logging.debug("Already exists!")
 
 	logging.debug("Calling %s" % cute.flask_backend.app.run)
-	cute.flask_backend.app.run()
+	cute.flask_backend.app.run("0.0.0.0")
 
 	return 0
 
