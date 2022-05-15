@@ -1,4 +1,4 @@
-*.ttf
+cute/TTF
 __pycache__/
 trash/
 output/

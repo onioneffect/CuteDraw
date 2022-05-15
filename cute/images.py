@@ -1,4 +1,3 @@
-import os
 import hashlib
 from PIL import Image, ImageFont, ImageDraw
 
@@ -11,7 +10,7 @@ def generate_img(path : str, text : str):
 
 	draw = ImageDraw.Draw(image)
 
-	font = ImageFont.truetype(r'wild.ttf', 18)
+	font = ImageFont.truetype(r'cute/TTF/wild.ttf', 18)
 
 	draw.rectangle(shape, fill = "black")
 	draw.text((x, y), text, fill = "white", font = font, align ="left")
