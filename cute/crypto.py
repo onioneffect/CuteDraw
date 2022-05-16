@@ -19,17 +19,3 @@ def check_pass(cfg, pass_word):
 	expected = getattr(cfg, "hash")
 
 	return attempt == expected
-
-"""
-def attr_check(cfg, attr : str):
-	try:
-		getattr(cfg, attr)
-	except AttributeError:
-		return getattr(errors.HashErrors, "HASHE_NO" + attr.upper())
-
-	if len(getattr(cfg, attr)) == 0:
-		print("HASHE_EMPTY" + attr.upper())
-		return getattr(errors.HashErrors, "HASHE_EMPTY" + attr.upper())
-
-	return 0
-"""
