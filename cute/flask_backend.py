@@ -42,7 +42,7 @@ def get_image():
 	rget = request.args.get
 
 	if not (rget("claim") and rget("user")):
-		pass
+		return send_file(cute.images.generate_img("cute/img/sup.jpg", "Invalid"))
 	else:
 		s = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 		return send_file(cute.images.generate_img("cute/img/sup.jpg", s))
