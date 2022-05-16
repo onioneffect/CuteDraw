@@ -12,8 +12,8 @@ def main(config):
 		logging.debug("Already exists!")
 
 	# Generate salt while setting up the program because it's random anyways
-	logging.debug("Calling %s with %s...", cute.crypto.attr_check, config)
-	ret = cute.crypto.attr_check(config, "salt")
+	logging.debug("Calling %s with `salt`...", config.attr_check)
+	ret = config.attr_check("salt")
 	logging.debug(cute.errors.HashErrors.m[ret])
 
 	if ret != cute.errors.HashErrors.HASHE_SUCCESS:

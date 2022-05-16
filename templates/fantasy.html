@@ -5,7 +5,6 @@
 </head>
 
 <body>
-    <h1>Hello, {{ username }}</h1>
     <img src="{{ url_for('static', filename='img/AF.jpg') }}" width="400px" />
     <form action="/fantasy", method="post">
 {% if not created %}    <p>Please enter a new password: </p>{% endif %}

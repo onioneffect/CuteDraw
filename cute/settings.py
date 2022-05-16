@@ -6,6 +6,19 @@ class Settings:
 		for k in j.keys():
 			setattr(self, k, j[k])
 
+	def attr_check(self, attr : str) -> int:
+		try:
+			getattr(self, attr)
+		except AttributeError:
+			return getattr(cute.errors.HashErrors, "HASHE_NO" + attr.upper())
+
+		if len(getattr(self, attr)) == 0:
+			print("HASHE_EMPTY" + attr.upper())
+			return getattr(cute.errors.HashErrors, "HASHE_EMPTY" + attr.upper())
+
+		return 0
+
+
 def cfg_path_check():
 	try:
 		return sys.argv[1]

@@ -1,5 +1,5 @@
 from inspect import Attribute
-import secrets
+import secrets, hashlib
 from cute import errors
 
 def gen_salt(cfg):
@@ -7,6 +7,20 @@ def gen_salt(cfg):
 	setattr(cfg, "salt", r)
 	return
 
+def gen_hash(cfg, pass_word):
+	h = hashlib.new("sha512")
+	h.update(bytes(pass_word, "utf-8"))
+	h.update(bytes.fromhex(cfg.salt))
+
+	return h
+
+def check_pass(cfg, pass_word):
+	attempt = gen_hash(cfg, pass_word).hexdigest()
+	expected = getattr(cfg, "hash")
+
+	return attempt == expected
+
+"""
 def attr_check(cfg, attr : str):
 	try:
 		getattr(cfg, attr)
@@ -18,3 +32,4 @@ def attr_check(cfg, attr : str):
 		return getattr(errors.HashErrors, "HASHE_EMPTY" + attr.upper())
 
 	return 0
+"""
