@@ -2,6 +2,8 @@ cute/TTF
 __pycache__/
 trash/
 output/
+*img/
+.venv/
 
-.venv
 cute/disc_classes.py
+config.json
