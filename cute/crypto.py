@@ -19,3 +19,7 @@ def check_pass(cfg, pass_word):
 	expected = getattr(cfg, "hash")
 
 	return attempt == expected
+
+def gen_cookie(pw, t):
+	# STILL NOT IMPLEMENTED
+	return "pinus lol"

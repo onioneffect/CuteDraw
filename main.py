@@ -3,6 +3,8 @@ import logging, os, sys
 
 from cute import flask_backend
 
+# TODO: Separate config.json and crypto.json
+
 def main(config):
 	logging.debug("Checking if outdir `%s` exists...", config.outdir)
 	if not os.path.isdir(config.outdir):
