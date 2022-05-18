@@ -24,7 +24,3 @@ def generate_img(path : str, text : str):
 
 	image.save(out_path)
 	return out_path
-
-if __name__ == "__main__":
-	import sys
-	generate_img(sys.argv[1], sys.argv[2])
