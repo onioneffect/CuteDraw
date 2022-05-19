@@ -1,6 +1,5 @@
-from inspect import Attribute
+import datetime
 import secrets, hashlib
-from cute import errors
 
 def gen_salt(cfg):
 	r = secrets.token_hex(32)
@@ -20,6 +19,12 @@ def check_pass(cfg, pass_word):
 
 	return attempt == expected
 
-def gen_cookie(pw, t):
-	# STILL NOT IMPLEMENTED
-	return "pinus lol"
+def gen_cookie(cfg, pass_word, t):
+	setattr(cfg, "logged", t)
+
+	h = hashlib.new("sha512")
+	h.update(t.to_bytes(8, byteorder="little"))
+	h.update(bytes(pass_word, "utf-8"))
+	h.update(bytes.fromhex(cfg.salt))
+
+	return h

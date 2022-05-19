@@ -19,13 +19,13 @@ def admin():
 			correct = cute.crypto.check_pass(client_settings, pw)
 			if correct:
 				now = datetime.datetime.now()
-				t = now.timestamp()
-				cookie_val = cute.crypto.gen_cookie(pw, t)
+				t = int(now.timestamp())
+				cookie_hash = cute.crypto.gen_cookie(client_settings, pw, t)
 
 				r = make_response(render_template("dogs.html"))
 				r.set_cookie(
 					"auth", # key
-					cookie_val, # value
+					cookie_hash.hexdigest(), # value
 					datetime.timedelta(hours=1) # max age
 				)
 				return r
