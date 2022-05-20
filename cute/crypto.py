@@ -24,7 +24,6 @@ def gen_cookie(cfg, pass_word, t):
 
 	h = hashlib.new("sha512")
 	h.update(t.to_bytes(8, byteorder="little"))
-	h.update(bytes(pass_word, "utf-8"))
 	h.update(bytes.fromhex(cfg.salt))
 
 	return h
