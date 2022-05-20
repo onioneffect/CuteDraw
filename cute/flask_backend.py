@@ -8,6 +8,7 @@ def admin_redirect(pw):
 	now = datetime.datetime.now()
 	t = int(now.timestamp())
 	cookie_hash = cute.crypto.gen_cookie(client_settings, pw, t)
+	cute.settings.save_config(client_settings)
 
 	r = make_response(render_template("dogs.html"))
 	r.set_cookie(
