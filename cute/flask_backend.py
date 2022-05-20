@@ -4,8 +4,22 @@ from flask import *
 app = Flask("CuteDraw")
 client_settings : cute.settings.Settings
 
+def admin_redirect(pw):
+	now = datetime.datetime.now()
+	t = int(now.timestamp())
+	cookie_hash = cute.crypto.gen_cookie(client_settings, pw, t)
+
+	r = make_response(render_template("dogs.html"))
+	r.set_cookie(
+		"auth", # key
+		cookie_hash.hexdigest(), # value
+		datetime.timedelta(hours=1) # max age
+	)
+	return r
+
+
 @app.route("/fantasy", methods = ['POST', 'GET'])
-def admin():
+def prompt():
 	hash_code = client_settings.attr_check("hash")
 	pass_created = hash_code not in (3, 4)
 
@@ -18,19 +32,7 @@ def admin():
 		elif pass_created:
 			correct = cute.crypto.check_pass(client_settings, pw)
 			if correct:
-				now = datetime.datetime.now()
-				t = int(now.timestamp())
-				cookie_hash = cute.crypto.gen_cookie(client_settings, pw, t)
-
-				r = make_response(render_template("dogs.html"))
-				r.set_cookie(
-					"auth", # key
-					cookie_hash.hexdigest(), # value
-					datetime.timedelta(hours=1) # max age
-				)
-				return r
-			else:
-				print("Wrong pass!")
+				return admin_redirect(pw)
 
 	return render_template(
 		"fantasy.html",
