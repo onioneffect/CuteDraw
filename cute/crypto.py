@@ -1,4 +1,3 @@
-import datetime
 import secrets, hashlib
 
 def gen_salt(cfg):
@@ -19,11 +18,15 @@ def check_pass(cfg, pass_word):
 
 	return attempt == expected
 
-def gen_cookie(cfg, pass_word, t):
-	setattr(cfg, "logged", t)
+def gen_cookie(cfg, t):
+	cfg.sessions = dict()
+
+	session_salt = secrets.token_hex(32)
+	cfg.sessions[t] = session_salt
 
 	h = hashlib.new("sha512")
 	h.update(t.to_bytes(8, byteorder="little"))
+	h.update(bytes.fromhex(session_salt))
 	h.update(bytes.fromhex(cfg.salt))
 
 	return h
