@@ -4,7 +4,7 @@ from flask import *
 app = Flask("CuteDraw")
 client_settings : cute.settings.Settings
 
-def admin_redirect(pw):
+def admin_redirect():
 	now = datetime.datetime.now()
 	t = int(now.timestamp())
 	cookie_hash = cute.crypto.gen_cookie(client_settings, t)
@@ -17,7 +17,6 @@ def admin_redirect(pw):
 		datetime.timedelta(hours=1) # max age
 	)
 	return r
-
 
 @app.route("/fantasy", methods = ['POST', 'GET'])
 def prompt():
@@ -33,7 +32,7 @@ def prompt():
 		elif pass_created:
 			correct = cute.crypto.check_pass(client_settings, pw)
 			if correct:
-				return admin_redirect(pw)
+				return admin_redirect()
 
 	return render_template(
 		"fantasy.html",

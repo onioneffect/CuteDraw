@@ -20,13 +20,16 @@ def check_pass(cfg, pass_word):
 
 def gen_cookie(cfg, t):
 	cfg.sessions = dict()
+	cfg.sessions[t] = list()
 
 	session_salt = secrets.token_hex(32)
-	cfg.sessions[t] = session_salt
+	cfg.sessions[t].append(session_salt)
 
 	h = hashlib.new("sha512")
 	h.update(t.to_bytes(8, byteorder="little"))
 	h.update(bytes.fromhex(session_salt))
 	h.update(bytes.fromhex(cfg.salt))
+
+	cfg.sessions[t].append(h.hexdigest())
 
 	return h
