@@ -18,8 +18,21 @@ def admin_redirect():
 	)
 	return r
 
+def cookie_check(req) -> bool:
+	cookie = req.cookies.get("auth")
+
+	# TODO: Just make `sessions` a list instead of dict
+	for key in client_settings.sessions.keys():
+		if cookie == client_settings.sessions[key][1]:
+			return True
+
+	return False
+
 @app.route("/fantasy", methods = ['POST', 'GET'])
 def prompt():
+	if cookie_check(request):
+		return admin_redirect()
+
 	hash_code = client_settings.attr_check("hash")
 	pass_created = hash_code not in (3, 4)
 
