@@ -1,5 +1,15 @@
 import secrets, hashlib
 
+class SessionObj:
+	unix_timestamp : int
+	session_salt : int
+	cookie : int
+
+	def __init__(self, u, s, c):
+		self.unix_timestamp = u
+		self.session_salt = s
+		self.cookie = c
+
 def gen_salt(cfg):
 	r = secrets.token_hex(32)
 	setattr(cfg, "salt", r)
@@ -19,17 +29,16 @@ def check_pass(cfg, pass_word):
 	return attempt == expected
 
 def gen_cookie(cfg, t):
-	cfg.sessions = dict()
-	cfg.sessions[t] = list()
+	cfg.sessions = list()
 
 	session_salt = secrets.token_hex(32)
-	cfg.sessions[t].append(session_salt)
 
 	h = hashlib.new("sha512")
 	h.update(t.to_bytes(8, byteorder="little"))
 	h.update(bytes.fromhex(session_salt))
 	h.update(bytes.fromhex(cfg.salt))
 
-	cfg.sessions[t].append(h.hexdigest())
+	current_sess = SessionObj(t, session_salt, h.hexdigest())
+	cfg.sessions.append(current_sess.__dict__)
 
 	return h

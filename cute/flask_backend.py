@@ -20,10 +20,8 @@ def admin_redirect():
 
 def cookie_check(req) -> bool:
 	cookie = req.cookies.get("auth")
-
-	# TODO: Just make `sessions` a list instead of dict
-	for key in client_settings.sessions.keys():
-		if cookie == client_settings.sessions[key][1]:
+	for dict in client_settings.sessions:
+		if dict["cookie"] == cookie:
 			return True
 
 	return False
@@ -42,6 +40,7 @@ def prompt():
 			sha_obj = cute.crypto.gen_hash(client_settings, pw)
 			setattr(client_settings, "hash", sha_obj.hexdigest())
 			cute.settings.save_config(client_settings)
+
 		elif pass_created:
 			correct = cute.crypto.check_pass(client_settings, pw)
 			if correct:
